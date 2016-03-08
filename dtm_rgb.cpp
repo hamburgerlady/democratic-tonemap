@@ -201,6 +201,10 @@ void tonemap(double *im, int N, int M, int K, int nrbins, bool dolog)
     for (int i = 0;i<N;i++)
         for (int j = 0;j<M;j++)
         {
+            im[i+j*N+0*N*M] = std::max(0.0,im[i+j*N+0*N*M]);
+            im[i+j*N+1*N*M] = std::max(0.0,im[i+j*N+1*N*M]);
+            im[i+j*N+2*N*M] = std::max(0.0,im[i+j*N+2*N*M]);
+     
             if (dolog)
             {
                 im[i+j*N+0*N*M]=log(1+im[i+j*N+0*N*M]);
