@@ -193,6 +193,7 @@ void tonemap(double *im, int N, int M, int K)
     mxArray *h_m, *H2_m, *x_m, *D_m, *B_m, *c_m, *imgr_m, *h2_m, *x2_m;
     double *h, *H2, *x, *D, *B, *c, *imgr, *h2, *x2, MM, mm;
     const int nrbins = 5000;
+    const double maxfact = 5000000;
     int nrbins2;
     
     imgr_m = mxCreateDoubleMatrix(N,M,mxREAL);
@@ -211,9 +212,9 @@ void tonemap(double *im, int N, int M, int K)
     for (int i = 0;i<N;i++)
         for (int j = 0;j<M;j++)
         {
-            im[i+j*N+0*N*M]=log(1+(nrbins-1)*(im[i+j*N+0*N*M]-mm)/(MM-mm));
-            im[i+j*N+1*N*M]=log(1+(nrbins-1)*(im[i+j*N+1*N*M]-mm)/(MM-mm));
-            im[i+j*N+2*N*M]=log(1+(nrbins-1)*(im[i+j*N+2*N*M]-mm)/(MM-mm)); 
+            im[i+j*N+0*N*M]=log(1+maxfact*(im[i+j*N+0*N*M]-mm)/(MM-mm));
+            im[i+j*N+1*N*M]=log(1+maxfact*(im[i+j*N+1*N*M]-mm)/(MM-mm));
+            im[i+j*N+2*N*M]=log(1+maxfact*(im[i+j*N+2*N*M]-mm)/(MM-mm)); 
             imgr[i+j*N] = std::max(im[i+j*N+0*N*M],std::max(im[i+j*N+1*N*M],im[i+j*N+2*N*M]));
         }
     x_m = mxCreateDoubleMatrix(1,nrbins,mxREAL);
@@ -222,7 +223,7 @@ void tonemap(double *im, int N, int M, int K)
     h = mxGetPr(h_m);
     
     
-    nrbins2 = hist_init(x,h,imgr,N,M,nrbins,log(nrbins));
+    nrbins2 = hist_init(x,h,imgr,N,M,nrbins,log(1+maxfact));
     
     if (K<nrbins2)
     {
@@ -245,7 +246,7 @@ void tonemap(double *im, int N, int M, int K)
     
         solvedynaprog(D,B,h2,H2,x2,nrbins2,K);
         backtrack(c,h2,H2,x2,B,nrbins2,K);
-        toneim(im,c,log(nrbins),nrbins,K,N,M);
+        toneim(im,c,log(1+maxfact),nrbins,K,N,M);
         mxDestroyArray(h2_m);
         mxDestroyArray(H2_m);
         mxDestroyArray(x2_m);  
@@ -255,7 +256,7 @@ void tonemap(double *im, int N, int M, int K)
 
     }
     else
-        toneim(im,x,log(nrbins),nrbins,K,N,M);
+        toneim(im,x,log(1+maxfact),nrbins,K,N,M);
     
     
     mxDestroyArray(imgr_m);
