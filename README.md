@@ -9,7 +9,7 @@ Contains two stand-alone versions, one with some additional settings
 * function imout = dtm_nopa(im,K)
 * function imout = dtm_rgb(im,K,dolog,bins)
 
- Matlab/mex implementation of 
+Matlab/mex implementation of 
  HDR video tonemapping described in
  "Temporally Consistent Tone Mapping of Images and Video Using Optimal K-means Clustering",
  M. Oskarsson, in J. Mathematical Imaging and Vision (2016)
