@@ -14,4 +14,6 @@ Matlab/mex implementation of
  "Temporally Consistent Tone Mapping of Images and Video Using Optimal K-means Clustering",
  M. Oskarsson, in J. Mathematical Imaging and Vision (2016)
 
+* See script dtm_demo.m for example use on an HDR image
+
 * See script video_dtm.m for how to run the video tone mapping on an input sequence of HDR images
