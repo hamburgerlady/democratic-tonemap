@@ -17,3 +17,9 @@ Matlab/mex implementation of
 * See script dtm_demo.m for example use on an HDR image
 
 * See script video_dtm.m for how to run the video tone mapping on an input sequence of HDR images
+
+Also contains Python bindings: 
+ * Compile dtm_python.cpp
+ * import dtm_python
+ * imout = dtm_python.dtm_rgb(im,K,nrbins = 1000,dolog = True)
+
